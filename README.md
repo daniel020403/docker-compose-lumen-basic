@@ -1,2 +1,1 @@
-# docker-compose-lumen-basic
-Basic Lumen setup with MySQL database.
+Basic Lumen setup with MySQL database and NGINX web server.
