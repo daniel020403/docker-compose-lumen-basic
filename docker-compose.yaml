@@ -3,14 +3,26 @@ version: "3.8"
 
 services: 
 
+    lumen:
+        build: 
+            context: ./images/php-7.4.22
+            dockerfile: Dockerfile
+        image: app-lumen:8.2.4
+        restart: unless-stopped
+        tty: true
+        volumes: 
+            - ./images/php-7.4.22/lumen-8.2.4:/var/www
+            - ./images/php-7.4.22/local.ini:/usr/local/etc/php/conf.d/local.ini
+        working_dir: /var/www
+        networks: 
+            dockernet:
+                ipv4_address: 192.168.42.11
+
     db:
         image: mysql:8.0.26
         restart: always
-        environment: 
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: lumen
-            MYSQL_USER: lumen
-            MYSQL_PASSWORD: lumen
+        env_file: 
+            - ./images/mysql-8.0.26/db.env
         volumes: 
             - db_data:/var/lib/mysql
         command: --default-authentication-plugin=mysql_native_password
